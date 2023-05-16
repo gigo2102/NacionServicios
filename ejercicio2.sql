@@ -25,8 +25,7 @@ HAVING COUNT(nrolegajo) >= 5
 
 --Los códigos de departamentos con la cantidad de empleados que tienen menos de 5 años de antigüedad,
 --discriminado por los años de antigüedad.
-select coddepto, count(nrolegajo) as cantidad , (select
-date_part('year', CURRENT_DATE) - date_part('year', fechaingreso) from public."EMPLEADO") AS ANTIGUEDAD
+select coddepto, count(nrolegajo) as cantidad ,( date_part('year', CURRENT_DATE) - date_part('year', fechaingreso)) AS ANTIGUEDAD
 from public."EMPLEADO"
 WHERE  date_part('year', CURRENT_DATE) - date_part('year', fechaingreso) <= 5
 group by coddepto, date_part('year', CURRENT_DATE) - date_part('year', fechaingreso)

@@ -16,12 +16,17 @@ def Transform_data():
         .rename(columns={"min": "min_shipping_cost"}).rename(columns={"max": "max_shipping_cost"}).rename(columns={"mean": "avg_shipping_cost"})
     data = data.reset_index().to_json(orient='records')
     return (data)
+df = pd.read_json(Transform_data())   
 
+#Testing 
 
-class Test(unittest.TestCase):   
-    df = pd.read_json(Transform_data())   
-    row = df[(df['dia_mes_anio'] == '21-07-2025') & (df['orig_dest'] == 'Capital Federal-Capital Federal')]
-    row.assertTrue (row.select("min_shipping_cost").filter("min_shipping_cost = 290").count() == 1)
+class Test(unittest.TestCase):
+    def test_XXX(self):
+        df = pd.read_json(Transform_data())   
+        row = df[(df['dia_mes_anio'] == '21-07-2025') & (df['orig_dest'] == 'Capital Federal-Capital Federal')]
+        self.assertTrue (len(row) == 1)
+        self.assertTrue (len(row['min_shipping_cost'] == 290) == 1 )
+
 
 def run_tests(l):
         for x in l:
@@ -29,7 +34,7 @@ def run_tests(l):
             runner = unittest.TextTestRunner(verbosity=2)
             runner.run(suite)
 
-run_tests(Test)
+run_tests([Test])
 
 
 
